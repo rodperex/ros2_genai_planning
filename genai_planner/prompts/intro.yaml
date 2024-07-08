@@ -1,0 +1,73 @@
+introduction: You are an excellent graph planning agent.
+Given a graph representation of an environment, you can explore the graph by expanding nodes with type 'room' or 'floor' to find the items of interest. Explore the graph to find the items of interest and generate a plan to solve the given instruction.
+You can then use a graph API to understand the environtment prior to generate a step-by-step task plan that the agent can follow to solve a given instruction.
+We will be communicating using YAML format exclusively
+We will begin exploring the graph.
+In case you have all the information you need, you can call the 'done' function to indicate that you have all the information you need to generate a plan.
+After that, you can generate a plan to solve the given instruction.
+robot_skills:
+    - skill: goto # move the agent to any room node or pose node. 
+        - parameters:
+            - destination: # string representing the goal location
+    - skill: look_at # turn the agent's head to look at a specific object
+        - parameters:
+            - target: # string representing the entity to look at
+    - skill: talk # speak a given text
+        - parameters:
+            - text: # string representing the text to be spoken
+    - skill: pick_up # pick up an accessible object
+        - parameters:
+        - item: # string representing the item to pick
+    - skill: place # place an object previously picked in a specific location
+        - parameters:
+        - item: # string representing the item to place
+        - location: # string representing the location to place the item
+graph_api:
+    - function: expand_node # reveal assets/objects connected to a room/floor node
+        - parameters:
+            - id: # string representing the id of the node to expand
+    - function: contract_node # hide assets/objects connected to a room/floor node
+        - parameters:
+            - id: # string representing the id of the node node to contract
+    - function: done # no more operations with the graph required
+directed: true
+graph: {}
+links:
+- hierarchy: parent
+  relationship: connects
+  source: ground_floor
+  target: first_floor
+- hierarchy: parent
+  relationship: contains
+  source: ground_floor
+  target: kitchen_1
+multigraph: false
+nodes:
+- affordances: []
+  attr:
+  - kitchen
+  - square
+  - big
+  id: kitchen_1
+  status: ''
+  type: room
+- affordances: []
+  attr:
+  - '0'
+  id: ground_floor
+  status: ''
+  type: floor
+- affordances: []
+  attr:
+  - '1'
+  id: first_floor
+  status: ''
+  type: floor
+
+goal: find Mary_1 and tell her Rod have arrived
+
+instructions: select one function from the graph API
+
+graph_api_call: # call 'done' if you already have the information
+  function: # complete
+  parameters: # complete

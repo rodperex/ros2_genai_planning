@@ -1,0 +1,7 @@
+goal: find Mary_1 and tell him Rod have arrived
+
+instructions: select one function from the graph API
+
+graph_api_call: # call 'done' if you already have the information
+  function: # complete
+  parameters: # complete
